@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Input, makeStyles, Modal } from '@material-ui/core'
 import styled from './Login.module.css'
-import { auth } from './firebase'
+import { auth } from '../firebase'
 
 
 
@@ -34,16 +34,54 @@ function Login(props) {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [user, setUser] = useState(null)
+  const [openSignIn, setOpenSignIn] = useState(false)
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        //user has logged in...
+        console.log(authUser)
+        setUser(authUser)
+      } else {
+        // user has logged out...
+        setUser(null)
+      }
+    })
+    return () => {
+      //perform some cleanup actions
+      unsubscribe()
+    }
+  }, [user, username])
   
   const signUp =(e) => {
+    e.preventDefault()
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((authUser) => {
+        return authUser.user.updateProfile({
+          displayName: username
+        })
+      })
+      .catch((error) => alert(error.message))
 
+    setOpen(false)
+  }
+  
+  const signIn = (e) => {
+    e.preventDefault()
+    auth
+      .signInWithEmailAndPassword(email, password)    
+      .catch((error) => alert(error.message))
+
+    setOpenSignIn(false)
   }
 
     return (
         <div>
       <Modal
-        open={props.open}
-        onClose={() => props.setOpen(false)}
+        open={open}
+        onClose={() => setOpen(false)}
       >
         <div style={modalStyle} className={classes.paper}>
           <form className={styled.signup}>
@@ -62,17 +100,47 @@ function Login(props) {
             />
             <Input
               placeholder='email'
-              type='text'
+              type='email'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <Input
               placeholder='password'
-              type='text'
+              type='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <Button type='submit' onClick={signUp}>Sign Up</Button>
+          </form>
+        </div>
+      </Modal>
+
+      <Modal
+        open={openSignIn}
+        onClose={() => setOpenSignIn(false)}
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <form className={styled.signup}>
+            <center>
+              <img
+                className={styled.headerImage}
+                src='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQp6HPVhiV-Y8A3dplMSqyJz32F2B-QMKn09A&usqp=CAU'
+                alt=''
+              />
+            </center>
+            <Input
+              placeholder='email'
+              type='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              placeholder='password'
+              type='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type='submit' onClick={signIn}>Sign In</Button>
           </form>
         </div>
       </Modal>
