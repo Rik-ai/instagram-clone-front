@@ -8,10 +8,12 @@ import ImageUpload from './ImageUpload/ImageUpload';
 
 function App() {
   const [posts, setPosts] = useState([])
+  const [user, setUser] = useState(null)
+
 
      
   useEffect(() => {
-    db.collection('posts').onSnapshot(snapshot =>{
+    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot =>{
       setPosts(snapshot.docs.map(doc => ({
         id: doc.id,
         post: doc.data()}
@@ -21,7 +23,11 @@ function App() {
 
   return (
     <div className={styled.app}>
-      <ImageUpload/>
+      {user?.displayName ? (
+      <ImageUpload username={user.displayName}/>
+      ) : (
+        <h3>Sorry you need to login to upload</h3>
+      )}
       <div className={styled.header}>
         <img
          className={styled.headerImage}
@@ -29,7 +35,7 @@ function App() {
          alt=''
          />
       </div>
-      <Login/>
+      <Login setUser={setUser} user={user} />
       {
         posts.map(({id, post})=>(
           <Post 

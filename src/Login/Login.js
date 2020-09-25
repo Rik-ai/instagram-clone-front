@@ -30,7 +30,6 @@ function Login(props) {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
   const [openSignIn, setOpenSignIn] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -40,17 +39,17 @@ function Login(props) {
       if (authUser) {
         //user has logged in...
         console.log(authUser)
-        setUser(authUser)
+        props.setUser(authUser)
       } else {
         // user has logged out...
-        setUser(null)
+        props.setUser(null)
       }
     })
     return () => {
       //perform some cleanup actions
       unsubscribe()
     }
-  }, [user, username])
+  }, [props.user, username])
   
   const signUp =(e) => {
     e.preventDefault()
@@ -143,7 +142,7 @@ function Login(props) {
         </div>
       </Modal>
 
-      {user ? (
+      {props.user ? (
         <Button onClick={() => auth.signOut()}>Logout</Button>
       ) : (
         <div className={styled.loginContainer}>
