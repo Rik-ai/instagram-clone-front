@@ -37,6 +37,7 @@ function App() {
         {
           posts.map(({id, post})=>(
             <Post 
+              postId={id}
               key={id} 
               username={post.username} 
               caption={post.caption} 
@@ -47,16 +48,16 @@ function App() {
         </div>
         <div className={styled.postsRight}>
           <InstagramEmbed
-          url='https://www.instagram.com/p/CFiRkYIDPkQ/?utm_source=ig_web_copy_link'
-          maxWidth={320}
-          hideCaption={false}
-          containerTagName='div'
-          protocol=''
-          injectScript
-          onLoading={() => {}}
-          onSuccess={() => {}}
-          onAfterRender={() => {}}
-          onFailure={() => {}}
+            url='https://www.instagram.com/p/CFiRkYIDPkQ/?utm_source=ig_web_copy_link'
+            maxWidth={320}
+            hideCaption={false}
+            containerTagName='div'
+            protocol=''
+            injectScript
+            onLoading={() => {}}
+            onSuccess={() => {}}
+            onAfterRender={() => {}}
+            onFailure={() => {}}
           />
         </div>
       </div>
