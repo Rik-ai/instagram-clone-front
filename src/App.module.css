@@ -11,9 +11,3 @@
   border-bottom: 1px solid lightgray;
   object-fit: contain;
 }
-      {/* **************************LOGIN*************************** */}
-.signup {
-  display: flex;
-  flex-direction: column;
-}
-      {/* **************************LOGIN*************************** */}
