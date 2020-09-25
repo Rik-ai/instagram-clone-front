@@ -3,6 +3,7 @@ import styled from './App.module.css';
 import Post from './Post/Post';
 import { db } from './firebase'
 import Login from './Login/Login';
+import ImageUpload from './ImageUpload/ImageUpload';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
 
   return (
     <div className={styled.app}>
+      <ImageUpload/>
       <div className={styled.header}>
         <img
          className={styled.headerImage}
