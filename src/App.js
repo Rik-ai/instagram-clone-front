@@ -31,6 +31,7 @@ function App() {
          alt=''
          />
          <Login setUser={setUser} user={user} />
+
       </div>
       <div className={styled.posts}>
         <div className={styled.postsLeft}>
@@ -62,13 +63,10 @@ function App() {
           />
         </div>
       </div>
-      
-
-      
       {user?.displayName ? (
       <ImageUpload username={user.displayName}/>
       ) : (
-        <h3>Sorry you need to login to upload</h3>
+        <h3></h3> //Sorry you need to login to upload
       )}
     </div>
   );

@@ -45,8 +45,8 @@ function Comments({postId, user}) {
                     </p>
                 ))}
             </div>
-
-            <form className={styled.commentBox}>
+            {user && (
+                <form className={styled.commentBox}>
                 <input
                 className={styled.input}
                 type='text'
@@ -63,6 +63,7 @@ function Comments({postId, user}) {
                     Post
                 </button>
             </form>
+            )}
         </div>
     )
 }
