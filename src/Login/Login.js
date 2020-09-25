@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Input, makeStyles, Modal } from '@material-ui/core'
+import { Button, Input, makeStyles, Modal } from '@material-ui/core';
 import styled from './Login.module.css'
 import { auth } from '../firebase'
-
-
 
 function getModalStyle() {
     const top = 50
     const left = 50
-  
     return {
       top: `${top}%`,
       left: `${left}%`,
@@ -25,7 +22,6 @@ function getModalStyle() {
       padding: theme.spacing(2, 4, 3),
     },
   }))
-  
 
 function Login(props) {
  
@@ -36,6 +32,8 @@ function Login(props) {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [openSignIn, setOpenSignIn] = useState(false)
+  const [open, setOpen] = useState(false)
+
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -144,6 +142,15 @@ function Login(props) {
           </form>
         </div>
       </Modal>
+
+      {user ? (
+        <Button onClick={() => auth.signOut()}>Logout</Button>
+      ) : (
+        <div className={styled.loginContainer}>
+          <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
+          <Button onClick={() => setOpen(true)}>Sign Up</Button>
+        </div>
+      )}
         </div>
     )
 }
