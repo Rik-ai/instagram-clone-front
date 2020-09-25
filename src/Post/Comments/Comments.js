@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { db } from '../../firebase'
 import styled from './Comments.module.css'
+import firebase from 'firebase'
 
-
-function Comments({postId}) {
+function Comments({postId, user}) {
 
     const [comments, setComments] = useState([])
     const [comment, setComment] = useState('')
@@ -15,6 +15,7 @@ function Comments({postId}) {
             .collection('posts')
             .doc(postId)
             .collection('comments')
+            .orderBy('timestamp', 'desc')
             .onSnapshot((snapshot) => {
                 setComments(snapshot.docs.map((doc) => doc.data()))
             })
@@ -24,7 +25,16 @@ function Comments({postId}) {
         }
     }, [postId])
     
-    const postComment = (e) => {}
+    const postComment = (e) => {
+        e.preventDefault()
+
+        db.collection('posts').doc(postId).collection('comments').add({
+            text: comment,
+            username: user.displayName,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        setComment('')
+    }
     
     return (
         <div>

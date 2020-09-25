@@ -4,7 +4,7 @@ import Avatar from '@material-ui/core/Avatar'
 import Comments from './Comments/Comments'
 
 
-function Post({postId, username, caption, imageUrl}) {
+function Post({postId, username, caption, imageUrl, user}) {
     return (
         <div className={styled.post}>
             <div className={styled.header}>
@@ -17,7 +17,7 @@ function Post({postId, username, caption, imageUrl}) {
             </div>
             <img className={styled.image} src={imageUrl}/>
             <h4 className={styled.text}><strong>{username}: </strong>{caption}</h4>
-           <Comments postId={postId}/>
+           <Comments postId={postId} user={user}/>
         </div>
     )
 }

@@ -37,6 +37,7 @@ function App() {
         {
           posts.map(({id, post})=>(
             <Post 
+              user={user}
               postId={id}
               key={id} 
               username={post.username} 
