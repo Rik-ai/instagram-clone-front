@@ -23,19 +23,15 @@ function App() {
 
   return (
     <div className={styled.app}>
-      {user?.displayName ? (
-      <ImageUpload username={user.displayName}/>
-      ) : (
-        <h3>Sorry you need to login to upload</h3>
-      )}
       <div className={styled.header}>
         <img
          className={styled.headerImage}
-         src='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQp6HPVhiV-Y8A3dplMSqyJz32F2B-QMKn09A&usqp=CAU'
+         src='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQzokQbqKR49iFzydHW3jSvOOK6aEzaXqZE8A&usqp=CAU'
          alt=''
          />
+         <Login setUser={setUser} user={user} />
       </div>
-      <Login setUser={setUser} user={user} />
+      
       {
         posts.map(({id, post})=>(
           <Post 
@@ -46,6 +42,11 @@ function App() {
           />
         ))
       }
+      {user?.displayName ? (
+      <ImageUpload username={user.displayName}/>
+      ) : (
+        <h3>Sorry you need to login to upload</h3>
+      )}
     </div>
   );
 }
