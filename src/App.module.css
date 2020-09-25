@@ -28,3 +28,12 @@
 .postsRight {
   margin-left: 20px;
 }
+.uploader {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  background-color: white;
+  border-top: 1px solid lightgray;
+  object-fit: contain;
+  display: flex;
+}

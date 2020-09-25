@@ -63,11 +63,14 @@ function App() {
           />
         </div>
       </div>
-      {user?.displayName ? (
-      <ImageUpload username={user.displayName}/>
-      ) : (
-        <h3></h3> //Sorry you need to login to upload
-      )}
+      <div className={styled.uploader}>
+        {user?.displayName ? (
+        <ImageUpload username={user.displayName}/>
+        ) : (
+          <h3> </h3> //Sorry you need to login to upload
+        )}
+      </div>
+
     </div>
   );
 }
