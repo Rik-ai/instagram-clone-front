@@ -4,6 +4,7 @@ import Post from './Post/Post';
 import { db } from './firebase'
 import Login from './Login/Login';
 import ImageUpload from './ImageUpload/ImageUpload';
+import InstagramEmbed from 'react-instagram-embed'
 
 
 function App() {
@@ -31,17 +32,37 @@ function App() {
          />
          <Login setUser={setUser} user={user} />
       </div>
-      
-      {
-        posts.map(({id, post})=>(
-          <Post 
-            key={id} 
-            username={post.username} 
-            caption={post.caption} 
-            imageUrl={post.imageUrl}
+      <div className={styled.posts}>
+        <div className={styled.postsLeft}>
+        {
+          posts.map(({id, post})=>(
+            <Post 
+              key={id} 
+              username={post.username} 
+              caption={post.caption} 
+              imageUrl={post.imageUrl}
+            />
+          ))
+        }
+        </div>
+        <div className={styled.postsRight}>
+          <InstagramEmbed
+          url='https://www.instagram.com/p/CFiRkYIDPkQ/?utm_source=ig_web_copy_link'
+          maxWidth={320}
+          hideCaption={false}
+          containerTagName='div'
+          protocol=''
+          injectScript
+          onLoading={() => {}}
+          onSuccess={() => {}}
+          onAfterRender={() => {}}
+          onFailure={() => {}}
           />
-        ))
-      }
+        </div>
+      </div>
+      
+
+      
       {user?.displayName ? (
       <ImageUpload username={user.displayName}/>
       ) : (

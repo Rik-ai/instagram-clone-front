@@ -17,3 +17,11 @@
   object-fit: contain;
   max-width: 15vh;
 }
+.posts {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+.postsRight {
+  margin-left: 20px;
+}
