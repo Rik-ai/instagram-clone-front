@@ -40,7 +40,7 @@ function Post({postId, username, caption, imageUrl}) {
             </div>
             <img className={styled.image} src={imageUrl}/>
             <h4 className={styled.text}><strong>{username}: </strong>{caption}</h4>
-            <form>
+            <form className={styled.commentBox}>
                 <input
                 className={styled.input}
                 type='text'
