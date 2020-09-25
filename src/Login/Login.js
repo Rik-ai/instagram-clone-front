@@ -23,7 +23,7 @@ function getModalStyle() {
     },
   }))
 
-function Login(props) {
+function Login({user, setUser}) {
  
   const classes = useStyles()
   const [modalStyle] = useState(getModalStyle)
@@ -39,17 +39,17 @@ function Login(props) {
       if (authUser) {
         //user has logged in...
         console.log(authUser)
-        props.setUser(authUser)
+        setUser(authUser)
       } else {
         // user has logged out...
-        props.setUser(null)
+        setUser(null)
       }
     })
     return () => {
       //perform some cleanup actions
       unsubscribe()
     }
-  }, [props.user, username])
+  }, [user, username])
   
   const signUp =(e) => {
     e.preventDefault()
@@ -142,7 +142,7 @@ function Login(props) {
         </div>
       </Modal>
 
-      {props.user ? (
+      {user ? (
         <Button onClick={() => auth.signOut()}>Logout</Button>
       ) : (
         <div className={styled.loginContainer}>
