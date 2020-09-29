@@ -5,6 +5,7 @@ import { db } from './firebase'
 import Login from './Login/Login'
 import ImageUpload from './ImageUpload/ImageUpload'
 import InstagramEmbed from 'react-instagram-embed'
+import axios from './axios'
 
 
 function App() {
@@ -14,13 +15,14 @@ function App() {
 
      
   useEffect(() => {
-    db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot =>{
-      setPosts(snapshot.docs.map(doc => ({
-        id: doc.id,
-        post: doc.data()}
-      )))
-    })
-  }, [posts])
+    const fetchPosts = async () => 
+      await axios.get('/sync').then(response => {
+        console.log(response)
+        setPosts(response.data)
+      })
+
+      fetchPosts()
+  }, [])
 
   return (
     <div className={styled.app}>
@@ -36,14 +38,14 @@ function App() {
       <div className={styled.posts}>
         <div className={styled.postsLeft}>
           {
-            posts.map(({id, post})=>(
+            posts.map((post)=>(
               <Post 
                 user={user}
-                postId={id}
-                key={id} 
-                username={post.username} 
+                postId={post._id}
+                key={post._id} 
+                username={post.user} 
                 caption={post.caption} 
-                imageUrl={post.imageUrl}
+                imageUrl={post.image}
               />
             ))
           }
