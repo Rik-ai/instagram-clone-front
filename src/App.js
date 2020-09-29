@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import styled from './App.module.css';
-import Post from './Post/Post';
+import React, { useEffect, useState } from 'react'
+import styled from './App.module.css'
+import Post from './Post/Post'
 import { db } from './firebase'
-import Login from './Login/Login';
-import ImageUpload from './ImageUpload/ImageUpload';
+import Login from './Login/Login'
+import ImageUpload from './ImageUpload/ImageUpload'
 import InstagramEmbed from 'react-instagram-embed'
 
 
@@ -18,7 +18,7 @@ function App() {
       setPosts(snapshot.docs.map(doc => ({
         id: doc.id,
         post: doc.data()}
-        )))
+      )))
     })
   }, [posts])
 
@@ -26,27 +26,27 @@ function App() {
     <div className={styled.app}>
       <div className={styled.header}>
         <img
-         className={styled.headerImage}
-         src='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQzokQbqKR49iFzydHW3jSvOOK6aEzaXqZE8A&usqp=CAU'
-         alt=''
-         />
-         <Login setUser={setUser} user={user} />
+          className={styled.headerImage}
+          src='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQzokQbqKR49iFzydHW3jSvOOK6aEzaXqZE8A&usqp=CAU'
+          alt=''
+        />
+        <Login setUser={setUser} user={user} />
 
       </div>
       <div className={styled.posts}>
         <div className={styled.postsLeft}>
-        {
-          posts.map(({id, post})=>(
-            <Post 
-              user={user}
-              postId={id}
-              key={id} 
-              username={post.username} 
-              caption={post.caption} 
-              imageUrl={post.imageUrl}
-            />
-          ))
-        }
+          {
+            posts.map(({id, post})=>(
+              <Post 
+                user={user}
+                postId={id}
+                key={id} 
+                username={post.username} 
+                caption={post.caption} 
+                imageUrl={post.imageUrl}
+              />
+            ))
+          }
         </div>
         <div className={styled.postsRight}>
           <InstagramEmbed
@@ -65,14 +65,14 @@ function App() {
       </div>
       <div className={styled.uploader}>
         {user?.displayName ? (
-        <ImageUpload username={user.displayName}/>
+          <ImageUpload username={user.displayName}/>
         ) : (
           <h3> </h3> //Sorry you need to login to upload
         )}
       </div>
 
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
