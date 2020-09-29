@@ -1,26 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import styled from './App.module.css'
 import Post from './Post/Post'
-import { db } from './firebase'
 import Login from './Login/Login'
 import ImageUpload from './ImageUpload/ImageUpload'
 import InstagramEmbed from 'react-instagram-embed'
 import axios from './axios'
+import Pusher from 'pusher-js'
 
 
 function App() {
   const [posts, setPosts] = useState([])
   const [user, setUser] = useState(null)
 
-
-     
-  useEffect(() => {
-    const fetchPosts = async () => 
+  const fetchPosts = async () => 
       await axios.get('/sync').then(response => {
         console.log(response)
         setPosts(response.data)
       })
 
+  useEffect(() => {
+    const pusher = new Pusher('47fac1b2cc2b969c3516', {
+      cluster: 'eu'
+    });
+    
+    const channel = pusher.subscribe('posts');
+    channel.bind('incerted', (data) => {
+      console.log('data received', data)
+      fetchPosts()
+    });
+  }, [])
+     
+  useEffect(() => {
       fetchPosts()
   }, [])
 
